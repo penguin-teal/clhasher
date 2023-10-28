@@ -10,7 +10,12 @@ enum OptKey
     OPT_OUT             = 'o',
     OPT_FNV1A           = -1,
     OPT_FNV1            = -2,
-    OPT_FNV0            = -3
+    OPT_FNV0            = -3,
+    OPT_b64             = -4,
+    OPT_b32             = -5,
+    OPT_b128            = -6,
+    OPT_SPLIT_64        = 'q',
+    OPT_SPLIT_32        = 'd'
 };
 
 const char *argp_program_version = "clhasher 1.0.0";
@@ -22,11 +27,19 @@ static struct argp_option options[] =
     { 0         ,       0                   , 0     ,     0, "Output Options:", 1 },
     { "verbose" ,       OPT_VERBOSE         , 0     ,     0, "Describe what is happening.", 1 },
     { "out"     ,       OPT_OUT             , "FILE",     0, "Output to file. Defaults to '-' for STDOUT.", 1 },
+    { "split-64",       OPT_SPLIT_64        , 0     ,     0, "Split the output to one 64-bit integer per line.", 1 },
+    { "split-32",       OPT_SPLIT_32        , 0     ,     0, "Split the output to one 32-bit integer per line.", 1 },
     
     { 0         ,       0                   , 0     ,     0, "Algorithms:", 2 },
     { "fnv1a"   ,       OPT_FNV1A           , 0     ,     0, "Use FNV-1a hashing algorithm. Default.", 2 },
     { "fnv1"    ,       OPT_FNV1            , 0     ,     0, "Use FNV-1 hashing algorithm.", 2 },
     { "fnv0"    ,       OPT_FNV0            , 0     ,     0, "Use FNV-0 hashing algorithm.", 2 },
+
+    { 0         ,       0                   , 0     ,     0, "Hash Size:", 3 },
+    { "b64"     ,       0                   , 0     ,     0, "Produce a 64-bit hash. Default.", 3 },
+    { "b32"     ,       0                   , 0     ,     0, "Produce a 32-bit hash.", 3 },
+    { "b128"    ,       0                   , 0     ,     0, "Produce a 128-bit hash.", 3 },
+
 
     { 0         ,       0                   , 0     ,     0, "Miscellaneous:", -1 },
 
@@ -45,6 +58,12 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
         case OPT_OUT:
             arguments->out = arg;
             break;
+        case OPT_SPLIT_64:
+            arguments->splitBits = 64;
+            break;
+        case OPT_SPLIT_32:
+            arguments->splitBits = 32;
+            break;
 
         case OPT_FNV1A:
             arguments->algorithm = ALG_FNV1A;
@@ -54,6 +73,16 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
             break;
         case OPT_FNV0:
             arguments->algorithm = ALG_FNV0;
+            break;
+        
+        case OPT_b64:
+            arguments->bits = 64;
+            break;
+        case OPT_b32:
+            arguments->bits = 32;
+            break;
+        case OPT_b128:
+            arguments->bits = 16;
             break;
         
         case ARGP_KEY_ARG:
@@ -87,7 +116,15 @@ bool doArgp(struct AppArgs *appArgs, int argc, char **argv)
     appArgs->verbose = false;
     appArgs->out = "-";
     appArgs->algorithm = OPT_FNV1A;
+    appArgs->bits = 64;
+    appArgs->splitBits = 64;
 
     error_t result = argp_parse(&argp, argc, argv, 0, 0, appArgs);
+
+    if(!appArgs->splitBits || appArgs->splitBits > appArgs->bits)
+    {
+        appArgs->splitBits = appArgs->bits;
+    }
+    
     return !result;
 }
