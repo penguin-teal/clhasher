@@ -5,7 +5,7 @@ RM				:= rm --
 EXTRA_CFLAGS	:=
 WARNINGS		:= -Wall -Wextra -Wfloat-equal -Wundef
 ERRORS			:= -Werror=implicit-int -Werror=implicit-function-declaration
-CFLAGS 		    := $(WARNINGS) $(ERRORS) -std=c99 $(EXTRA_CFLAGS)
+CFLAGS 		    := $(WARNINGS) $(ERRORS) -std=gnu2x $(EXTRA_CFLAGS)
 CURRENT_CFLAGS	:=
 
 BIN   		    := ./bin
