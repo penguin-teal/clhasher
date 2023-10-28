@@ -14,7 +14,7 @@ enum OptKey
 };
 
 const char *argp_program_version = "clhasher 1.0.0";
-const char *argp_program_bug_address = "github.com/penguin-teal/clhasher";
+const char *argp_program_bug_address = "https://github.com/penguin-teal/clhasher";
 static const char doc[] = "clhasher -- Quickly hash values.";
 static const char argsDoc[] = "string";
 static struct argp_option options[] =
