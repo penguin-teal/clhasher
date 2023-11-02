@@ -114,7 +114,7 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
             arguments->bits = 32;
             break;
         case OPT_b128:
-            arguments->bits = 16;
+            arguments->bits = 128;
             break;
         
         case ARGP_KEY_ARG:
