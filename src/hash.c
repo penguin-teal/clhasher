@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "algorithm.h"
 #include "ints.h"
 #include "appArgs.h"
@@ -27,7 +28,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                         return 0;
                 }
                 
-                *outBuf = hash;
+                memcpy(outBuf, &hash, sizeof(uint32_t));
                 return sizeof(uint32_t);
             }
             else
@@ -54,7 +55,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                         return 0;
                 }
 
-                *outBuf = hash;
+                memcpy(outBuf, &hash, sizeof(uint64_t));
                 return sizeof(uint64_t);
             }
             else
@@ -81,7 +82,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                         return 0;
                 }
                 
-                *outBuf = hash;
+                memcpy(outBuf, &hash, sizeof(u128));
                 return sizeof(u128);
             }
             else
