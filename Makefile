@@ -36,9 +36,9 @@ $(OUT): $(SRCS)
 tests: $(TESTOUTS)
 	$(RM) $^
 
-$(TESTBIN)/%: $(TESTSRC)/%.c
+$(TESTBIN)/%: $(TESTSRC)/%.c $(SRC)/fnv.c
 	$(MKDIR) $(TESTBIN)
-	$(CC) $(CFLAGS) $(INCLUDEFLAGS) $(CHECK_TEST_FLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDEFLAGS) $(CHECK_TEST_FLAGS) -o $@ $< $(SRC)/fnv.c
 	./$@
 
 clean:
