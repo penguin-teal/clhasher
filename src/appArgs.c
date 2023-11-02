@@ -51,10 +51,10 @@ static struct argp_option options[] =
     { "fnv1"    ,       OPT_FNV1            , 0     ,     0, "Use FNV-1 hashing algorithm.", 4 },
     { "fnv0"    ,       OPT_FNV0            , 0     ,     0, "Use FNV-0 hashing algorithm.", 4 },
 
-    { 0         ,       0                   , 0     ,     0, "Hash Size:", 4 },
-    { "b64"     ,       0                   , 0     ,     0, "Default. Produce a 64-bit hash.", 4 },
-    { "b32"     ,       0                   , 0     ,     0, "Produce a 32-bit hash.", 4 },
-    { "b128"    ,       0                   , 0     ,     0, "Produce a 128-bit hash.", 4 },
+    { 0         ,       0                   , 0     ,     0, "Hash Size:", 5 },
+    { "b64"     ,       0                   , 0     ,     0, "Default. Produce a 64-bit hash.", 5 },
+    { "b32"     ,       0                   , 0     ,     0, "Produce a 32-bit hash.", 5 },
+    { "b128"    ,       0                   , 0     ,     0, "Produce a 128-bit hash.", 5 },
 
 
     { 0         ,       0                   , 0     ,     0, "Miscellaneous:", -1 },
