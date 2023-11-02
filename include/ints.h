@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-#define u128 _BitInt(128)
+typedef __uint128_t u128;
 
 #endif
