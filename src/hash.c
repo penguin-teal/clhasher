@@ -53,14 +53,14 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                     default:
                         return 0;
                 }
-                
+
                 *outBuf = hash;
-                return 8;
+                return sizeof(uint64_t);
             }
             else
             {
                 fprintf(stderr, "Buffer too small.\n");
-                return sizeof(uint64_t);
+                return 0;
             }
         case 128:
             if(bufSize >= sizeof(u128))
