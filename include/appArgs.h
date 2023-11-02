@@ -13,6 +13,8 @@ struct AppArgs
     enum Algorithm algorithm;
     uint32_t bits;
     uint32_t splitBits;
+    bool hiToLo;
+    uint32_t radix;
 };
 
 bool doArgp(struct AppArgs *appArgs, int argc, char **argv);
