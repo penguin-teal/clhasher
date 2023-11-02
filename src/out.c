@@ -4,8 +4,8 @@
 
 void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
 {
-    static char *fmt32 = "%u\n";
-    static char *fmt64 = "%lu\n";
+    char fmt[6];
+    fmt[0] = '%';
 
     uint64_t lines = appArgs->bits / appArgs->splitBits;
 
@@ -29,17 +29,22 @@ void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
     switch(appArgs->splitBits)
     {
         case 32:
-            fmt32[1] = fmtCh;
+            fmt[1] = fmtCh;
+            fmt[2] = '\n';
+            fmt[3] = '\0';
             for(uint64_t i = 0; i < lines; i++)
             {
-                fprintf(f, fmt32, ((uint32_t*)buf)[i]);
+                fprintf(f, fmt, ((uint32_t*)buf)[i]);
             }
             break;
         case 64:
-            fmt64[2] = fmtCh;
+            fmt[1] = 'l';
+            fmt[2] = fmtCh;
+            fmt[3] = '\n';
+            fmt[4] = '\0';
             for(uint64_t i = 0; i < lines; i++)
             {
-                fprintf(f, fmt64, ((uint64_t*)buf)[i]);
+                fprintf(f, fmt, ((uint64_t*)buf)[i]);
             }
             break;
     }
