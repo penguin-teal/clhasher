@@ -18,7 +18,16 @@ int main(int argc, char **argv)
 
     uint8_t hash[16];
 
-    size_t valueLen = strlen(appArgs.value);
+    size_t valueLen;
+    if(appArgs.len)
+    {
+        valueLen = appArgs.len;
+    }
+    else
+    {
+        valueLen = strlen(appArgs.value);
+        if(appArgs.hashNul) valueLen++;
+    }
 
     size_t hashSize = getHash(
         &appArgs,
