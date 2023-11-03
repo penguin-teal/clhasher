@@ -10,6 +10,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
     switch(args->bits)
     {
         case 32:
+            if(args->verbose) printf("Preparing 32-bit hash.\n");
             if(bufSize >= sizeof(uint32_t))
             {
                 uint32_t hash;
@@ -37,6 +38,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 return 0;
             }
         case 64:
+            if(args->verbose) printf("Preparing 64-bit hash.\n");
             if(bufSize >= sizeof(uint64_t))
             {
                 uint64_t hash;
@@ -64,6 +66,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 return 0;
             }
         case 128:
+            if(args->verbose) printf("Preparing 128-bit hash.\n");
             if(bufSize >= sizeof(u128))
             {
                 u128 hash;

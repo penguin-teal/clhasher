@@ -11,6 +11,8 @@ void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
 
     uint64_t lines = appArgs->bits / appArgs->splitBits;
 
+    if(appArgs->verbose) printf("Writing %lu lines of output.\n", lines);
+
     char fmtCh;
     switch(appArgs->radix)
     {

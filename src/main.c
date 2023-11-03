@@ -45,8 +45,16 @@ int main(int argc, char **argv)
     if(!hashSize) return 1;
 
     FILE *outF;
-    if(appArgs.out[0] == '-' && appArgs.out[1] == '\0') outF = stdout;
-    else outF = fopen(appArgs.out, "w");
+    if(appArgs.out[0] == '-' && appArgs.out[1] == '\0')
+    {
+        outF = stdout;
+        if(appArgs.verbose) printf("Outputting to STDOUT.\n");
+    }
+    else
+    {
+        outF = fopen(appArgs.out, "w");
+        if(appArgs.verbose) printf("Outputting to %s.\n", appArgs.out);
+    }
 
     if(!outF)
     {
