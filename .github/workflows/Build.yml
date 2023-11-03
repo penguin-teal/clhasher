@@ -24,7 +24,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-        - uses: actions/checkout@v3d
+        - uses: actions/checkout@v3
         - run: make release CC=clang
         - run: make clean
         - run: make debug CC=clang
