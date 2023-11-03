@@ -39,11 +39,15 @@ void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
             fmt[3] = '\0';
             for(uint64_t i = 0; i < lines; i++)
             {
+                uint64_t inx;
+                if(appArgs->hiToLo) inx = lines - i - 1;
+                else inx = i;
+
                 if(appArgs->annotate)
                 {
-                    fprintf(f, "u32 [%lu]:\t", i * sizeof(uint32_t));
+                    fprintf(f, "u32 [%lu]:\t%s", inx * sizeof(uint32_t), annoPrefix);
                 }
-                fprintf(f, fmt, ((uint32_t*)buf)[i]);
+                fprintf(f, fmt, ((uint32_t*)buf)[inx]);
             }
             break;
         case 64:
@@ -53,11 +57,15 @@ void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
             fmt[4] = '\0';
             for(uint64_t i = 0; i < lines; i++)
             {
+                uint64_t inx;
+                if(appArgs->hiToLo) inx = lines - i - 1;
+                else inx = i;
+
                 if(appArgs->annotate)
                 {
-                    fprintf(f, "u64 [%lu]:\t", i * sizeof(uint64_t));
+                    fprintf(f, "u64 [%lu]:\t%s", inx * sizeof(uint64_t), annoPrefix);
                 }
-                fprintf(f, fmt, ((uint64_t*)buf)[i]);
+                fprintf(f, fmt, ((uint64_t*)buf)[inx]);
             }
             break;
     }
