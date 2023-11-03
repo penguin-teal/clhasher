@@ -1,0 +1,32 @@
+name: Build
+
+on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+jobs:
+    build-gcc:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3
+        - run: make release CC=gcc
+        - run: make clean
+        - run: make debug CC=gcc
+        - run: ./bin/clhasher -ax --b64 'test_hash'
+        - run: make clean
+
+    build-clang:
+
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v3d
+        - run: make release CC=clang
+        - run: make clean
+        - run: make debug CC=clang
+        - run: ./bin/clhasher -ax --b64 'test_hash'
+        - run: make clean
