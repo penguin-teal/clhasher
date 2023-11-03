@@ -15,6 +15,9 @@ struct AppArgs
     uint32_t splitBits;
     bool hiToLo;
     uint32_t radix;
+    uint64_t len;
+    bool hashNul;
+    bool annotate;
 };
 
 bool doArgp(struct AppArgs *appArgs, int argc, char **argv);

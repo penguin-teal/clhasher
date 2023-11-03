@@ -1,6 +1,8 @@
 #include <argp.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "algorithm.h"
 #include "appArgs.h"
 
@@ -22,7 +24,10 @@ enum OptKey
     OPT_HEX             = 'x',
     OPT_OCTAL           = -7,
     OPT_BINARY          = -8,
-    OPT_BASE10          = -9
+    OPT_BASE10          = -9,
+    OPT_LEN             = 'z',
+    OPT_HASH_NUL        = '0',
+    OPT_ANNOTATE        = 'a'
 };
 
 const char *argp_program_version = "clhasher 1.0.0";
@@ -39,6 +44,9 @@ static struct argp_option options[] =
     { "hi-to-lo",       OPT_HI_TO_LO        , 0     ,     0, "When splitting output, print the most significant part first.", 1 },
     { "float"   ,       OPT_FLOAT           , 0     ,     0, "Prints the output as (a) 32-bit IEEE 754 float(s) binary32.", 1 },
     { "double"  ,       OPT_DOUBLE          , 0     ,     0, "Prints the output as (a) 64-bit IEEE 754 double float(s) binary64.", 1 },
+    { "length"  ,       OPT_LEN             , "SIZE",     0, "The size in bytes of the data to hash. Defaults to 0 which stops at NUL.", 1 },
+    { "hash-nul",       OPT_HASH_NUL        , 0     ,     0, "When using auto length, includes the terminating NUL (\\0) in the hash.", 1 },
+    { "annotate",       OPT_ANNOTATE        , 0     ,     0, "Annotate output with radix prefixes and index/size info.", 1 },
 
     { 0         ,       0                   , 0     ,     0, "Print Number Format:", 2 },
     { "hex"     ,       OPT_HEX             , 0     ,     0, "Prints as (a) hexadecimal base-16 number(s).", 2 },
@@ -83,7 +91,33 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
         case OPT_HI_TO_LO:
             arguments->hiToLo = true;
             break;
-        
+        case OPT_LEN:
+            {
+                int oldErrno = errno;
+                errno = 0;
+
+                char *end;
+                uint64_t len = strtoul(arg, &end, 10);
+                if(!len && errno)
+                {
+                    errno = oldErrno;
+                    argp_usage(state);
+                    break;
+                }
+                else
+                {
+                    errno = oldErrno;
+                    arguments->len = len;
+                    break;
+                }
+            }
+        case OPT_HASH_NUL:
+            arguments->hashNul = true;
+            break;
+        case OPT_ANNOTATE:
+            arguments->annotate = true;
+            break;
+
         case OPT_BINARY:
             arguments->radix = 2;
             break;
@@ -152,6 +186,9 @@ bool doArgp(struct AppArgs *appArgs, int argc, char **argv)
     appArgs->splitBits = 64;
     appArgs->hiToLo = false;
     appArgs->radix = 10;
+    appArgs->len = 0;
+    appArgs->hashNul = false;
+    appArgs->annotate = false;
 
     error_t result = argp_parse(&argp, argc, argv, 0, 0, appArgs);
 
