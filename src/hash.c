@@ -16,7 +16,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 switch(args->algorithm)
                 {
                     case ALG_FNV0:
-                        hash = fnv1_32(in, size);
+                        hash = fnv0_32(in, size);
                         break;
                     case ALG_FNV1:
                         hash = fnv1_32(in, size);
@@ -43,7 +43,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 switch(args->algorithm)
                 {
                     case ALG_FNV0:
-                        hash = fnv1_64(in, size);
+                        hash = fnv0_64(in, size);
                         break;
                     case ALG_FNV1:
                         hash = fnv1_64(in, size);
@@ -70,7 +70,7 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 switch(args->algorithm)
                 {
                     case ALG_FNV0:
-                        hash = fnv1_128(in, size);
+                        hash = fnv0_128(in, size);
                         break;
                     case ALG_FNV1:
                         hash = fnv1_128(in, size);
