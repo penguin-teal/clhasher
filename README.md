@@ -1,4 +1,4 @@
-![Build Status](https://github.com/penguin-teal/clhasher/actions/workflows/Build.yml/badge.svg)](https://github.com/penguin-teal/clhasher/actions/workflows/Build.yml)
+[![Build Status](https://github.com/penguin-teal/clhasher/actions/workflows/Build.yml/badge.svg)](https://github.com/penguin-teal/clhasher/actions/workflows/Build.yml)
 
 # clhasher
 CLHasher is a simple command line utility to get hashes of strings or numbers.
