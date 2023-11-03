@@ -12,8 +12,13 @@ int main(int argc, char **argv)
 
     if(!appArgs.value)
     {
-        fprintf(stderr, "No value given to hash.\n");
+        fprintf(stderr, "No value given to hash. Run with --usage to see usage.\n");
         return 2;
+    }
+
+    if(!appArgs.algorithm)
+    {
+        fprintf(stderr, "No algorithm given. Run with --help to see algorithm flags.\n");
     }
 
     uint8_t hash[16];

@@ -181,7 +181,7 @@ bool doArgp(struct AppArgs *appArgs, int argc, char **argv)
     appArgs->value = NULL;
     appArgs->verbose = false;
     appArgs->out = "-";
-    appArgs->algorithm = ALG_FNV1A;
+    appArgs->algorithm = 0;
     appArgs->bits = 64;
     appArgs->splitBits = 64;
     appArgs->hiToLo = false;
