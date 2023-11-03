@@ -51,7 +51,7 @@ static struct argp_option options[] =
     { 0         ,       0                   , 0     ,     0, "Print Number Format:", 2 },
     { "hex"     ,       OPT_HEX             , 0     ,     0, "Prints as (a) hexadecimal base-16 number(s).", 2 },
     { "octal"   ,       OPT_OCTAL           , 0     ,     0, "Prints as (a) octal base-8 number(s).", 2 },
-    { "binary"  ,       OPT_BINARY          , 0     ,     0, "Prints as (a) binary base-2 number(s).", 2 },
+    //{ "binary"  ,       OPT_BINARY          , 0     ,     0, "Prints as (a) binary base-2 number(s).", 2 },
     { "base-10" ,       OPT_BASE10          , 0     ,     0, "Default. Prints as (a) normal base-10 number(s).", 2 },
     
     { 0         ,       0                   , 0     ,     0, "Algorithms:", 4 },
