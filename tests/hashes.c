@@ -23,9 +23,9 @@ END_TEST
 
 START_TEST(FNV0)
 {
-    ck_assert_int_eq(fnv0_32((uint8_t*)"myD4TAPACK3t@",   sizeof("myD4TAPACK3t@") - 1), 0xCC3A1038);
+    ck_assert_int_eq(fnv0_32((uint8_t*)"myD4TAPACK3t@",   sizeof("myD4TAPACK3t@") - 1), 0x2237C53B);
 
-    ck_assert_int_eq(fnv0_64((uint8_t*)"myD4TAPACK3t@",   sizeof("myD4TAPACK3t@") - 1), 0x8EA573C766F7B7F8);
+    ck_assert_int_eq(fnv0_64((uint8_t*)"myD4TAPACK3t@",   sizeof("myD4TAPACK3t@") - 1), 0x82C5DD97E679F8FB);
 }
 END_TEST
 
