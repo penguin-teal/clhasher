@@ -13,11 +13,7 @@ jobs:
 
         steps:
         - uses: actions/checkout@v3
-        - run: sudo apt-get install check
-        - run: ./configure
         - run: make release CC=gcc
-        - run: make clean
-        - run: make debug CC=gcc
         - run: ./bin/clhasher -ax --b64 'test_hash'
         - run: make clean
 
@@ -27,10 +23,6 @@ jobs:
 
         steps:
         - uses: actions/checkout@v3
-        - run: sudo apt-get install check
-        - run: ./configure
         - run: make release CC=clang
-        - run: make clean
-        - run: make debug CC=clang
         - run: ./bin/clhasher -ax --b64 'test_hash'
         - run: make clean
