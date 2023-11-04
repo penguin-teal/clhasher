@@ -16,14 +16,20 @@ int main(int argc, char **argv)
     {
         if(appArgs.in)
         {
-            if(appArgs.in[0] == '-' && appArgs.in[1] == '\0')
+            if(!strncmp(appArgs.in, "-", 2) && !appArgs.len)
             {
                 in = mallocReadStdin(stdin);
                 if(!in) return 2;
             }
             else
             {
-                FILE *fIn = fopen(appArgs.in, "rb");
+                FILE *fIn;
+                if(!strncmp(appArgs.in, "-", 2))
+                {
+                    fIn = fopen(appArgs.in, "rb");
+                }
+                else fIn = stdin;
+                
                 if(!fIn)
                 {
                     fprintf(stderr, "Couldn't open input file '%s'.\n", appArgs.in);
@@ -84,7 +90,7 @@ int main(int argc, char **argv)
     }
 
     FILE *outF;
-    if(appArgs.out[0] == '-' && appArgs.out[1] == '\0')
+    if(!strncmp(appArgs.out, "-", 2))
     {
         outF = stdout;
         if(appArgs.verbose) printf("Outputting to STDOUT.\n");
