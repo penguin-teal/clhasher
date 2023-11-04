@@ -1,6 +1,8 @@
 MKDIR 			:= mkdir -p --
 RMDIR   		:= rm -Rf --
 RM				:= rm --
+PRINTF			:= printf --
+CP				:= cp --
 
 EXTRA_CFLAGS	:=
 WARNINGS		:= -Wall -Wextra -Wfloat-equal -Wundef
@@ -21,7 +23,9 @@ TESTOUTS		:= $(patsubst $(TESTSRC)/%.c,$(TESTBIN)/%,$(TESTSRCS))
 
 CHECK_TEST_FLAGS:= -pthread -lcheck -lrt -lm
 
-.PHONY: release debug tests clean
+DESTDIR			:= /usr/local/bin
+
+.PHONY: release debug tests install clean
 
 release: CURRENT_CFLAGS += -O3 -DNDEBUG
 release: $(OUT)
@@ -37,9 +41,13 @@ tests: $(TESTOUTS)
 	$(RM) $^
 
 $(TESTBIN)/%: $(TESTSRC)/%.c $(SRC)/fnv.c
+	$(PRINTF) 'NEEDED: check\n'
 	$(MKDIR) $(TESTBIN)
 	$(CC) $(CFLAGS) $(INCLUDEFLAGS) $(CHECK_TEST_FLAGS) -o $@ $< $(SRC)/fnv.c
 	./$@
+
+install:
+	$(CP) ./bin/clhasher $(DESTDIR)/clhasher
 
 clean:
 	$(RMDIR) $(TESTBIN) $(BIN)

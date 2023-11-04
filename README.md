@@ -8,6 +8,23 @@ of strings or data.
 clhasher <options> <algorithm flag> <input>
 ```
 
+## Installing/Uninstalling
+
+To install:
+```shell
+# to /usr/local/bin:
+make install
+# or to other dir:
+make install DESTDIR=/some/other/dir
+```
+To uninstall just `rm` the executable file:
+```shell
+# if you used make install:
+rm /usr/local/bin/clhasher -i
+# if you installed using DESTDIR=*:
+rm /some/other/dir/clhasher -i
+```
+
 ## Use
 
 This creates a 64-bit hash using the FNV-1A algorithm:
