@@ -24,7 +24,7 @@ CHECK_TEST_FLAGS:= -pthread -lcheck -lrt -lm
 .PHONY: release debug tests clean
 
 release: CURRENT_CFLAGS += -O3 -DNDEBUG
-release: $(OUT) tests
+release: $(OUT)
 
 debug: CURRENT_CFLAGS += -g3 -O0 -DDEBUG
 debug: $(OUT) tests
