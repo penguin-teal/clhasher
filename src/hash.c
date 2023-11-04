@@ -16,13 +16,13 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 uint32_t hash;
                 switch(args->algorithm)
                 {
-                    case ALG_FNV0:
+                    case ALG_FNV0_32:
                         hash = fnv0_32(in, size);
                         break;
-                    case ALG_FNV1:
+                    case ALG_FNV1_32:
                         hash = fnv1_32(in, size);
                         break;
-                    case ALG_FNV1A:
+                    case ALG_FNV1A_32:
                         hash = fnv1a_32(in, size);
                         break;
                     default:
@@ -44,13 +44,13 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 uint64_t hash;
                 switch(args->algorithm)
                 {
-                    case ALG_FNV0:
+                    case ALG_FNV0_64:
                         hash = fnv0_64(in, size);
                         break;
-                    case ALG_FNV1:
+                    case ALG_FNV1_64:
                         hash = fnv1_64(in, size);
                         break;
-                    case ALG_FNV1A:
+                    case ALG_FNV1A_64:
                         hash = fnv1a_64(in, size);
                         break;
                     default:
@@ -72,13 +72,13 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
                 u128 hash;
                 switch(args->algorithm)
                 {
-                    case ALG_FNV0:
+                    case ALG_FNV0_128:
                         hash = fnv0_128(in, size);
                         break;
-                    case ALG_FNV1:
+                    case ALG_FNV1_128:
                         hash = fnv1_128(in, size);
                         break;
-                    case ALG_FNV1A:
+                    case ALG_FNV1A_128:
                         hash = fnv1a_128(in, size);
                         break;
                     default:

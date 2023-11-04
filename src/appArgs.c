@@ -10,9 +10,15 @@ enum OptKey
 {
     OPT_VERBOSE         = 'v',
     OPT_OUT             = 'o',
-    OPT_FNV1A           = -1,
-    OPT_FNV1            = -2,
-    OPT_FNV0            = -3,
+    OPT_FNV1A_32        = -1,
+    OPT_FNV1A_64        = -10,
+    OPT_FNV1A_128       = -11,
+    OPT_FNV1_32         = -2,
+    OPT_FNV1_64         = -12,
+    OPT_FNV1_128        = -13,
+    OPT_FNV0_32         = -3,
+    OPT_FNV0_64         = -14,
+    OPT_FNV0_128        = -15,
     OPT_b64             = -4,
     OPT_b32             = -5,
     OPT_b128            = -6,
@@ -54,16 +60,16 @@ static struct argp_option options[] =
     //{ "binary"  ,       OPT_BINARY          , 0     ,     0, "Prints as (a) binary base-2 number(s).", 2 },
     { "base-10" ,       OPT_BASE10          , 0     ,     0, "Default. Prints as (a) normal base-10 number(s).", 2 },
     
-    { 0         ,       0                   , 0     ,     0, "Algorithms:", 4 },
-    { "fnv1a"   ,       OPT_FNV1A           , 0     ,     0, "Default. Use FNV-1a hashing algorithm.", 4 },
-    { "fnv1"    ,       OPT_FNV1            , 0     ,     0, "Use FNV-1 hashing algorithm.", 4 },
-    { "fnv0"    ,       OPT_FNV0            , 0     ,     0, "Use FNV-0 hashing algorithm.", 4 },
-
-    { 0         ,       0                   , 0     ,     0, "Hash Size:", 5 },
-    { "b64"     ,       OPT_b64             , 0     ,     0, "Default. Produce a 64-bit hash.", 5 },
-    { "b32"     ,       OPT_b32             , 0     ,     0, "Produce a 32-bit hash.", 5 },
-    { "b128"    ,       OPT_b128            , 0     ,     0, "Produce a 128-bit hash.", 5 },
-
+    { 0          ,       0                   , 0     ,     0, "Algorithms:", 4 },
+    { "fnv1a-32" ,       OPT_FNV1A_32        , 0     ,     0, "Default. Use FNV-1a 32-bit hashing algorithm.", 4 },
+    { "fnv1a-64" ,       OPT_FNV1A_64        , 0     ,     0, "Default. Use FNV-1a 64-bit hashing algorithm.", 4 },
+    { "fnv1a-128",       OPT_FNV1A_128       , 0     ,     0, "Default. Use FNV-1a 128-bit hashing algorithm.", 4 },
+    { "fnv1-32"  ,       OPT_FNV1_32         , 0     ,     0, "Use FNV-1 32-bit hashing algorithm.", 4 },
+    { "fnv1-64"  ,       OPT_FNV1_64         , 0     ,     0, "Use FNV-1 64-bit hashing algorithm.", 4 },
+    { "fnv1-128" ,       OPT_FNV1_128        , 0     ,     0, "Use FNV-1 128-bit hashing algorithm.", 4 },
+    { "fnv0-32"  ,       OPT_FNV0_32         , 0     ,     0, "Use FNV-0 32-bit hashing algorithm.", 4 },
+    { "fnv0-64"  ,       OPT_FNV0_64         , 0     ,     0, "Use FNV-0 64-bit hashing algorithm.", 4 },
+    { "fnv0-128" ,       OPT_FNV0_128        , 0     ,     0, "Use FNV-0 128-bit hashing algorithm.", 4 },
 
     { 0         ,       0                   , 0     ,     0, "Miscellaneous:", -1 },
 
@@ -131,14 +137,32 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
             arguments->radix = 10;
             break;
 
-        case OPT_FNV1A:
-            arguments->algorithm = ALG_FNV1A;
+        case OPT_FNV1A_32:
+            arguments->algorithm = ALG_FNV1A_32;
             break;
-        case OPT_FNV1:
-            arguments->algorithm = ALG_FNV1;
+        case OPT_FNV1A_64:
+            arguments->algorithm = ALG_FNV1A_64;
             break;
-        case OPT_FNV0:
-            arguments->algorithm = ALG_FNV0;
+        case OPT_FNV1A_128:
+            arguments->algorithm = ALG_FNV1A_128;
+            break;
+        case OPT_FNV1_32:
+            arguments->algorithm = ALG_FNV1_32;
+            break;
+        case OPT_FNV1_64:
+            arguments->algorithm = ALG_FNV1_64;
+            break;
+        case OPT_FNV1_128:
+            arguments->algorithm = ALG_FNV1_128;
+            break;
+        case OPT_FNV0_32:
+            arguments->algorithm = ALG_FNV0_32;
+            break;
+        case OPT_FNV0_64:
+            arguments->algorithm = ALG_FNV0_64;
+            break;
+        case OPT_FNV0_128:
+            arguments->algorithm = ALG_FNV0_128;
             break;
         
         case OPT_b64:
@@ -191,6 +215,8 @@ bool doArgp(struct AppArgs *appArgs, int argc, char **argv)
     appArgs->annotate = false;
 
     error_t result = argp_parse(&argp, argc, argv, 0, 0, appArgs);
+
+    appArgs->bits = appArgs->algorithm & ALG_SIZE_MASK;
 
     if(!appArgs->splitBits || appArgs->splitBits > appArgs->bits)
     {

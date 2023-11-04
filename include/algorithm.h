@@ -3,9 +3,17 @@
 
 enum Algorithm
 {
-    ALG_FNV1A = 1,
-    ALG_FNV1 = 2,
-    ALG_FNV0 = 3
+    ALG_FNV1A_32  = 0x00010020,
+    ALG_FNV1A_64  = 0x00010040,
+    ALG_FNV1A_128 = 0x00010080,
+    ALG_FNV1_32   = 0x00020020,
+    ALG_FNV1_64   = 0x00020040,
+    ALG_FNV1_128  = 0x00020080,
+    ALG_FNV0_32   = 0x00030020,
+    ALG_FNV0_64   = 0x00030040,
+    ALG_FNV0_128  = 0x00030080,
+
+    ALG_SIZE_MASK = 0x0000FFFF
 };
 
 #endif

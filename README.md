@@ -25,20 +25,11 @@ number.
 
 ## Algorithms
 
-`clhasher` currently supports the following hash sizes:
-
-- 32 bit (`--b32`)
-- 64 bit (`--b64`, Default)
-- 128 bit* (`--b128`)
-
-*Currently sizes greater than 64 bits can only be printed as multiple 64
-bit integers.
-
 Currently the following algorithms are supported:
 
-- FNV-0 (`--fnv0`)
-- FNV-1 (`--fnv1`)
-- FNV-1A (`--fnv1a`)
+- FNV-0: 32, 64, & 128 (`--fnv0-32`, `--fnv0-64`, `--fnv0-128`)
+- FNV-1: 32, 64, & 128 (`--fnv1-32`, `--fnv1-64`, `--fnv1-128`)
+- FNV-1A: 32, 64, & 128 (`--fnv1a-32`, `--fnv1a-64`, `--fnv1a-128`)
 
 ## Options
 
@@ -62,9 +53,15 @@ Hash Sizes:
 
 [Algorithms](#algorithms):
 
-- `--fnv0` FNV-0 algorithm.
-- `--fnv1` FNV-1 algorithm.
-- `--fnv1a` FNV-1A algorithm.
+- `--fnv0-32` FNV-0 32-bit algorithm.
+- `--fnv0-64` FNV-0 64-bit algorithm.
+- `--fnv0-128` FNV-0 128-bit algorithm.
+- `--fnv1-32` FNV-1 32-bit algorithm.
+- `--fnv1-64` FNV-1 64-bit algorithm.
+- `--fnv1-128` FNV-1 128-bit algorithm.
+- `--fnv1a-32` FNV-1A 32-bit algorithm.
+- `--fnv1a-64` FNV-1A 64-bit algorithm.
+- `--fnv1a-128` FNV-1A 128-bit algorithm.
 
 Output Formatting:
 
