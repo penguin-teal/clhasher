@@ -33,7 +33,8 @@ enum OptKey
     OPT_BASE10          = -9,
     OPT_LEN             = 'z',
     OPT_HASH_NUL        = '0',
-    OPT_ANNOTATE        = 'a'
+    OPT_ANNOTATE        = 'a',
+    OPT_IN              = 'i'
 };
 
 const char *argp_program_version = "clhasher 1.0.0";
@@ -45,6 +46,7 @@ static struct argp_option options[] =
     { 0         ,       0                   , 0     ,     0, "Output Options:", 1 },
     { "verbose" ,       OPT_VERBOSE         , 0     ,     0, "Describe what is happening.", 1 },
     { "out"     ,       OPT_OUT             , "FILE",     0, "Output to file. Defaults to '-' for STDOUT.", 1 },
+    { "in"      ,       OPT_IN              , "FILE",     0, "Get input from file. Defaults to '-' for STDIN.", 1 },
     { "split-64",       OPT_SPLIT_64        , 0     ,     0, "Split the output to one 64-bit integer per line.", 1 },
     { "split-32",       OPT_SPLIT_32        , 0     ,     0, "Split the output to one 32-bit integer per line.", 1 },
     { "hi-to-lo",       OPT_HI_TO_LO        , 0     ,     0, "When splitting output, print the most significant part first.", 1 },
@@ -87,6 +89,9 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
             break;
         case OPT_OUT:
             arguments->out = arg;
+            break;
+        case OPT_IN:
+            arguments->in = arg;
             break;
         case OPT_SPLIT_64:
             arguments->splitBits = 64;
@@ -205,6 +210,7 @@ bool doArgp(struct AppArgs *appArgs, int argc, char **argv)
     appArgs->value = NULL;
     appArgs->verbose = false;
     appArgs->out = "-";
+    appArgs->in = "-";
     appArgs->algorithm = 0;
     appArgs->bits = 64;
     appArgs->splitBits = 64;

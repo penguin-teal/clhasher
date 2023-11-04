@@ -1,24 +1,57 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "appArgs.h"
 #include "out.h"
 #include "hash.h"
+#include "readF.h"
 
 int main(int argc, char **argv)
 {
-
+    char *in = NULL;
     struct AppArgs appArgs;
     if(!doArgp(&appArgs, argc, argv)) return 2;
 
     if(!appArgs.value)
     {
-        fprintf(stderr, "No value given to hash. Run with --usage to see usage.\n");
-        return 2;
+        if(appArgs.in)
+        {
+            if(appArgs.in[0] == '-' && appArgs.in[1] == '\0')
+            {
+                in = mallocReadStdin(stdin);
+                if(!in) return 2;
+            }
+            else
+            {
+                FILE *fIn = fopen(appArgs.in, "rb");
+                if(!fIn)
+                {
+                    fprintf(stderr, "Couldn't open input file '%s'.\n", appArgs.in);
+                    return 2;
+                }
+
+                in = mallocFileBuffer(fIn, appArgs.len);
+
+                fclose(fIn);
+
+                if(!in) return 2;
+            }
+
+            appArgs.value = in;
+        }
+        else
+        {
+            fprintf(stderr, "No value given to hash. Run with --usage to see usage.\n");
+            return 2;
+        }
     }
 
     if(!appArgs.algorithm)
     {
+        if(in) free(in);
+
         fprintf(stderr, "No algorithm given. Run with --help to see algorithm flags.\n");
+        return 2;
     }
 
     uint8_t hash[16];
@@ -42,7 +75,13 @@ int main(int argc, char **argv)
         sizeof hash
     );
 
-    if(!hashSize) return 1;
+    if(!hashSize)
+    {
+        if(in) free(in);
+
+        fprintf(stderr, "Hashing failed. (got hashSize was zero)\n");
+        return 1;
+    }
 
     FILE *outF;
     if(appArgs.out[0] == '-' && appArgs.out[1] == '\0')
@@ -58,6 +97,8 @@ int main(int argc, char **argv)
 
     if(!outF)
     {
+        if(in) free(in);
+
         fprintf(stderr, "Couldn't open file '%s' for writing.\n", appArgs.out);
         return 2;
     }

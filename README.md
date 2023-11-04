@@ -38,6 +38,7 @@ Here are all the options. You can also run `clhasher --help` for a similar list.
 Miscellaneous:
 
 - `-o <FILE>`/`--out=<FILE>` Print into a file. Defaults to `-` for STDOUT.
+- `-i <FILE>`/`--in=<FILE>` Read from a file if no value argument is given. Defaults to `-` for STDIN.
 - `-z <BYTES>`/`--length=<BYTES>` Number of bytes of input to hash. Defaults to `0` for automatic.
 - `-0`/`--hash-nul` When length is automatic, includes the `\0` `NUL` to hash (by default does not hash the `NUL`).
 - `-v`/`--verbose` Describe what is happening.

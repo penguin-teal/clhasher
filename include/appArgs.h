@@ -9,6 +9,7 @@ struct AppArgs
 {
     char *value;
     char *out;
+    char *in;
     bool verbose;
     enum Algorithm algorithm;
     uint32_t bits;
