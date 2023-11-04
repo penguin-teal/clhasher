@@ -1,9 +1,0 @@
-#!/bin/sh
-
-if ! command -v 'check' > /dev/null; then
-    echo "Couldn't find 'check' for unit tests."
-fi
-
-echo './configure finished successfully.'
-
-exit 0
