@@ -1,27 +1,70 @@
 [![Build Status](https://github.com/penguin-teal/clhasher/actions/workflows/Build.yml/badge.svg)](https://github.com/penguin-teal/clhasher/actions/workflows/Build.yml)
 
 # clhasher
-CLHasher is a simple command line utility to get hashes of strings or numbers.
+CLHasher is a Linux command line utility to get non-cryptographic hashes
+of strings or data.
 
 ```shell
 clhasher <options> <algorithm flag> <input>
 ```
 
-## Basic Use
+## Use
 
 This creates a 64-bit hash using the FNV-1A algorithm:
 ```shell
-clhasher --b64 --fnv1a 'My String'
+clhasher --fnv1a-64 'My String'
+```
+Which prints:
+```
+9354639888599838980
 ```
 
 You can also format the output better:
 ```shell
-clhasher -ax --b64 --fnv1a 'My String'
+clhasher -ax --fnv1a-64 'My String'
+```
+Which prints:
+```
+u64 [0]:    0x81D25B6A69B17104
 ```
 
 The `-a` option is for `--annotate` which produces a little more of a formatted
 output, and `-x` is for `--hex` which prints the hash as a base-16 hexadecimal
 number.
+
+You can also split large integers into smaller ones:
+```shell
+clhasher -ax --fnv0-128 --split-64 'splitting'
+```
+
+```
+u64 [0]:        0x2FE83015B8E8ABEC
+u64 [8]:        0x12A4876D7700025E
+```
+
+It can also read from STDIN:
+```shell
+gcc --version | grep --color=never 'gcc' | clhasher -x --fnv1a-64
+```
+
+```
+DBEF2942FEC1D09F
+```
+
+More examples:
+```shell
+# Hash entire file:
+clhasher -x -i ./Makefile --fnv1-32
+# 50C5D52
+
+# Hash up to 20 chars from a file:
+clhasher -x -i ./Makefile --fnv1a-32 -z 20
+# 577B9B35
+
+# Hash the NUL terminator:
+clhasher -x0 --fnv1a-64 'TESTSTR'
+# BEB7B33DE037BF70
+```
 
 ## Algorithms
 
