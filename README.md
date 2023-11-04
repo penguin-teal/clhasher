@@ -45,12 +45,6 @@ Miscellaneous:
 - `--usage` See usage message.
 - `-V`/`--version` Print program version.
 
-Hash Sizes:
-
-- `--b32` 32-bit hash.
-- `--b64` 64-bit hash (default).
-- `--b128` 128-bit hash.
-
 [Algorithms](#algorithms):
 
 - `--fnv0-32` FNV-0 32-bit algorithm.
