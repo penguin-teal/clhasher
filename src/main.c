@@ -24,11 +24,8 @@ int main(int argc, char **argv)
             else
             {
                 FILE *fIn;
-                if(!strncmp(appArgs.in, "-", 2))
-                {
-                    fIn = fopen(appArgs.in, "rb");
-                }
-                else fIn = stdin;
+                if(!strncmp(appArgs.in, "-", 2)) fIn = stdin;
+                else fIn = fopen(appArgs.in, "rb");
                 
                 if(!fIn)
                 {
