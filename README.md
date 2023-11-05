@@ -9,6 +9,7 @@ clhasher <options> <algorithm flag> <input>
 ```
 
 - [Installing](#installing)
+- [Updating](#updating)
 - [Uninstalling](#uninstalling)
 - [Use](#use)
 - [Algorithms](#algorithms)
@@ -16,6 +17,7 @@ clhasher <options> <algorithm flag> <input>
 - [Escaping](#escaping)
 
 ## Installing
+
 1. Clone the repository.
 ```shell
 # Clone into directory 'clhasher'
@@ -25,12 +27,34 @@ cd clhasher
 # Go to specific release (v1.0.0 is latest)
 git switch --detach v1.0.0
 ```
-2. Install. To install there is a `make install` target and an optional `DESTDIR` variable.
+
+2. Build the project.
+```shell
+# Make a release build
+make release
+```
+
+3. Install. To install there is a `make install` target and an optional `DESTDIR` variable.
 ```shell
 # Install to /usr/local/bin: (ROOT is required)
 sudo make install
 # or to other dir:
 # make install DESTDIR=/some/other/dir
+```
+
+## Updating
+
+```shell
+# Go to where you cloned the repository
+cd clhasher
+# Get the changes
+git pull
+# Switch to latest (v1.0.0 is latest)
+git switch --detach v1.0.0
+# Clean just to be safe then build release again
+make clean release
+# Install like you did before (ROOT is required)
+sudo make install
 ```
 
 ## Uninstalling
