@@ -81,6 +81,10 @@ clhasher -x -i ./Makefile --fnv1a-32 -z 20
 # Hash the NUL terminator:
 clhasher -x0 --fnv1a-64 'TESTSTR'
 # BEB7B33DE037BF70
+
+# Use escape codes:
+clhasher -xe --fnv1a-64 'line1\n\tline2'
+# B2063D2905CD97E1
 ```
 
 ## Algorithms
@@ -101,6 +105,7 @@ Miscellaneous:
 - `-i <FILE>`/`--in=<FILE>` Read from a file if no value argument is given. Defaults to `-` for STDIN.
 - `-z <BYTES>`/`--length=<BYTES>` Number of bytes of input to hash. Defaults to `0` for automatic.
 - `-0`/`--hash-nul` When length is automatic, includes the `\0` `NUL` to hash (by default does not hash the `NUL`).
+- `-e`/`--escape` Escape the inputted string (see [Escaping](#escaping)).
 - `-v`/`--verbose` Describe what is happening.
 - `-?`/`--help` Print help list.
 - `--usage` See usage message.
@@ -130,3 +135,22 @@ Splitting:
 
 - `--split-32` Split hash output into one/multiple 32-bit numbers (e.g. 64-bit prints two 32-bit numbers).
 - `--split-64` Split hash output into one/multiple 64-bit numbers (default).
+
+## Escaping
+
+You can enable escaping via `-e`. Enabling escaping means that the string _must_
+end at a `NUL`, and therefore having a string containing `NUL`s like
+`-z <SIZE>` allows will not work.
+
+| Escape Code    | ASCII | Description |
+|----------------|-------|-------------|
+| `\n`           | `0A`  | New line    |
+| `\r`           | `0D`  | Carriage return |
+| `\t`           | `09`  | Tab         |
+| `\\`           | `5C`  | Backslash   |
+| `\0`           | `00`  | Nul*        |
+| `\XXX`         |       | Octal Code* |
+| `\oXXX`        |       | Octal Code* |
+| `\xXX`         |       | Hex Code*   |
+
+*If a `NUL` character exists the string will end there.
