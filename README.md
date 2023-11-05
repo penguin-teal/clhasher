@@ -8,21 +8,39 @@ of strings or data.
 clhasher <options> <algorithm flag> <input>
 ```
 
-## Installing/Uninstalling
+- [Installing](#installing)
+- [Uninstalling](#uninstalling)
+- [Use](#use)
+- [Algorithms](#algorithms)
+- [Options](#options)
+- [Escaping](#escaping)
 
-To install:
+## Installing
+1. Clone the repository.
 ```shell
-# to /usr/local/bin:
-make install
-# or to other dir:
-make install DESTDIR=/some/other/dir
+# Clone into directory 'clhasher'
+git clone https://github.com/penguin-teal/clhasher.git clhasher
+# Enter that directory
+cd clhasher
+# Go to specific release (v1.0.0 is latest)
+git switch --detach v1.0.0
 ```
+2. Install. To install there is a `make install` target and an optional `DESTDIR` variable.
+```shell
+# Install to /usr/local/bin: (ROOT is required)
+sudo make install
+# or to other dir:
+# make install DESTDIR=/some/other/dir
+```
+
+## Uninstalling
+
 To uninstall just `rm` the executable file:
 ```shell
-# if you used make install:
+# if you used make install: (ROOT is required)
 rm /usr/local/bin/clhasher -i
-# if you installed using DESTDIR=*:
-rm /some/other/dir/clhasher -i
+# or if you installed using DESTDIR=*:
+# rm /some/other/dir/clhasher -i
 ```
 
 ## Use
