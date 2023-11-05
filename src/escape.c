@@ -30,7 +30,7 @@ static size_t escNums(char *out, const char **in, size_t z, int radix)
     int gotErrno = errno;
     errno = lastErrno;
 
-    if (gotErrno || end != strchrnul(buf, '\0'))
+    if (gotErrno || (size_t)(end - buf) != strlen(buf))
     {
         fprintf(stderr, "Malformed octal escape sequence '%s'.", buf);
         if(gotErrno) fprintf(stderr, " Errno 0x%x: %s.\n", gotErrno, strerror(gotErrno));
