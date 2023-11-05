@@ -99,6 +99,16 @@ Currently the following algorithms are supported:
 
 Here are all the options. You can also run `clhasher --help` for a similar list.
 
+Usage:
+
+```shell
+clhasher <options> <algorithm option> <string>
+```
+Or omit `<string>` for STDIN:
+```shell
+echo 'hello' | clhasher <options> <algorithm option>
+```
+
 Miscellaneous:
 
 - `-o <FILE>`/`--out=<FILE>` Print into a file. Defaults to `-` for STDOUT.
