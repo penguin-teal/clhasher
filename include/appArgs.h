@@ -19,6 +19,7 @@ struct AppArgs
     uint64_t len;
     bool hashNul;
     bool annotate;
+    bool escape;
 };
 
 bool doArgp(struct AppArgs *appArgs, int argc, char **argv);

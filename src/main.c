@@ -5,10 +5,11 @@
 #include "out.h"
 #include "hash.h"
 #include "readF.h"
+#include "escape.h"
 
 int main(int argc, char **argv)
 {
-    char *in = NULL;
+    char *inVal = NULL;
     struct AppArgs appArgs;
     if(!doArgp(&appArgs, argc, argv)) return 2;
 
@@ -18,8 +19,8 @@ int main(int argc, char **argv)
         {
             if(!strncmp(appArgs.in, "-", 2) && !appArgs.len)
             {
-                in = mallocReadStdin(stdin);
-                if(!in) return 2;
+                inVal = mallocReadStdin(stdin);
+                if(!inVal) return 2;
             }
             else
             {
@@ -33,14 +34,14 @@ int main(int argc, char **argv)
                     return 2;
                 }
 
-                in = mallocFileBuffer(fIn, appArgs.len);
+                inVal = mallocFileBuffer(fIn, appArgs.len);
 
                 fclose(fIn);
 
-                if(!in) return 2;
+                if(!inVal) return 2;
             }
 
-            appArgs.value = in;
+            appArgs.value = inVal;
         }
         else
         {
@@ -49,9 +50,19 @@ int main(int argc, char **argv)
         }
     }
 
+    if(appArgs.escape)
+    {
+        char *esc = mallocEscStr(appArgs.value);
+        if(!esc) return 2;
+
+        if(inVal) free(inVal);
+        inVal = esc;
+        appArgs.value = esc;
+    }
+
     if(!appArgs.algorithm)
     {
-        if(in) free(in);
+        if(inVal) free(inVal);
 
         fprintf(stderr, "No algorithm given. Run with --help to see algorithm flags.\n");
         return 2;
@@ -80,7 +91,7 @@ int main(int argc, char **argv)
 
     if(!hashSize)
     {
-        if(in) free(in);
+        if(inVal) free(inVal);
 
         fprintf(stderr, "Hashing failed. (got hashSize was zero)\n");
         return 1;
@@ -100,7 +111,7 @@ int main(int argc, char **argv)
 
     if(!outF)
     {
-        if(in) free(in);
+        if(inVal) free(inVal);
 
         fprintf(stderr, "Couldn't open file '%s' for writing.\n", appArgs.out);
         return 2;

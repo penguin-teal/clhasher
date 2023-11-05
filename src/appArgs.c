@@ -34,7 +34,8 @@ enum OptKey
     OPT_LEN             = 'z',
     OPT_HASH_NUL        = '0',
     OPT_ANNOTATE        = 'a',
-    OPT_IN              = 'i'
+    OPT_IN              = 'i',
+    OPT_ESCAPE          = 'e'
 };
 
 const char *argp_program_version = "clhasher 1.0.0";
@@ -55,6 +56,7 @@ static struct argp_option options[] =
     { "length"  ,       OPT_LEN             , "SIZE",     0, "The size in bytes of the data to hash. Defaults to 0 which stops at NUL.", 1 },
     { "hash-nul",       OPT_HASH_NUL        , 0     ,     0, "When using auto length, includes the terminating NUL (\\0) in the hash.", 1 },
     { "annotate",       OPT_ANNOTATE        , 0     ,     0, "Annotate output with radix prefixes and index/size info.", 1 },
+    { "escape",         OPT_ESCAPE          , 0     ,     0, "Character escape sequences.", 1 },
 
     { 0         ,       0                   , 0     ,     0, "Print Number Format:", 2 },
     { "hex"     ,       OPT_HEX             , 0     ,     0, "Prints as (a) hexadecimal base-16 number(s).", 2 },
@@ -127,6 +129,9 @@ static error_t parseOpt(int key, char *arg, struct argp_state *state)
             break;
         case OPT_ANNOTATE:
             arguments->annotate = true;
+            break;
+        case OPT_ESCAPE:
+            arguments->escape = true;
             break;
 
         case OPT_BINARY:
@@ -219,6 +224,7 @@ bool doArgp(struct AppArgs *appArgs, int argc, char **argv)
     appArgs->len = 0;
     appArgs->hashNul = false;
     appArgs->annotate = false;
+    appArgs->escape = false;
 
     error_t result = argp_parse(&argp, argc, argv, 0, 0, appArgs);
 
