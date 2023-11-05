@@ -105,7 +105,7 @@ Miscellaneous:
 - `-i <FILE>`/`--in=<FILE>` Read from a file if no value argument is given. Defaults to `-` for STDIN.
 - `-z <BYTES>`/`--length=<BYTES>` Number of bytes of input to hash. Defaults to `0` for automatic.
 - `-0`/`--hash-nul` When length is automatic, includes the `\0` `NUL` to hash (by default does not hash the `NUL`).
-- `-e`/`--escape` Escape the inputted string (see [Escaping](#escaping)).
+- `-e`/`--escape` Allow escape sequences in the inputted string (see [Escaping](#escaping)).
 - `-v`/`--verbose` Describe what is happening.
 - `-?`/`--help` Print help list.
 - `--usage` See usage message.
