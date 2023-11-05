@@ -195,7 +195,7 @@ end at a `NUL`, and therefore having a string containing `NUL`s like
 `-z <SIZE>` allows will not work.
 
 | Escape Code    | ASCII | Description |
-|----------------|-------|-------------|
+|----------------|:-----:|-------------|
 | `\n`           | `0A`  | New line    |
 | `\r`           | `0D`  | Carriage return |
 | `\t`           | `09`  | Tab         |
