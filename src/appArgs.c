@@ -38,7 +38,7 @@ enum OptKey
     OPT_ESCAPE          = 'e'
 };
 
-const char *argp_program_version = "clhasher 1.0.0";
+const char *argp_program_version = "clhasher v1.0.0";
 const char *argp_program_bug_address = "https://github.com/penguin-teal/clhasher";
 static const char doc[] = "clhasher -- Quickly hash values.";
 static const char argsDoc[] = "string";
