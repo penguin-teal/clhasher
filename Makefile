@@ -19,7 +19,7 @@ INCLUDEFLAGS	:= -I$(INCLUDE)
 TESTSRC			:= ./tests
 TESTSRCS		:= $(wildcard $(TESTSRC)/*.c)
 TESTBIN			:= ./testbin
-TESTOUTS		:= $(patsubst $(TESTSRC)/%.c,$(TESTBIN)/%,$(TESTSRCS))
+TESTOUT		    := $(TESTBIN)/test
 
 CHECK_TEST_FLAGS:= -pthread -lcheck -lrt -lm
 
@@ -37,13 +37,13 @@ $(OUT): $(SRCS)
 	$(MKDIR) $(BIN)
 	$(CC) $(CFLAGS) $(CURRENT_CFLAGS) $(INCLUDEFLAGS) $^ -o $(OUT)
 
-tests: $(TESTOUTS)
+tests: $(TESTOUT)
 	$(RM) $^
 
-$(TESTBIN)/%: $(TESTSRC)/%.c $(SRC)/fnv.c
+$(TESTOUT): $(TESTSRC)/main.c $(SRC)/fnv.c $(SRC)/escape.c
 	$(PRINTF) 'NEEDED: check\n'
 	$(MKDIR) $(TESTBIN)
-	$(CC) $(CFLAGS) $(INCLUDEFLAGS) $(CHECK_TEST_FLAGS) -o $@ $< $(SRC)/fnv.c
+	$(CC) $(CFLAGS) $(INCLUDEFLAGS) $(CHECK_TEST_FLAGS) -o $@ $^
 	./$@
 
 install:

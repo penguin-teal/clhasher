@@ -28,23 +28,3 @@ START_TEST(FNV0)
     ck_assert_int_eq(fnv0_64((uint8_t*)"myD4TAPACK3t@",   sizeof("myD4TAPACK3t@") - 1), 0x82C5DD97E679F8FB);
 }
 END_TEST
-
-int main(void)
-{
-    Suite *s1 = suite_create("Core");
-    TCase *tc1 = tcase_create("Core");
-    SRunner *sr = srunner_create(s1);
-    int nf;
-
-    suite_add_tcase(s1, tc1);
-
-    tcase_add_test(tc1, FNV1A);
-    tcase_add_test(tc1, FNV1);
-    tcase_add_test(tc1, FNV0);
-
-    srunner_run_all(sr, CK_ENV);
-    nf = srunner_ntests_failed(sr);
-    srunner_free(sr);
-
-    return nf ? 1 : 0;
-}
