@@ -4,8 +4,9 @@
 #include "ints.h"
 #include "appArgs.h"
 #include "fnv.h"
+#include "out.h"
 
-size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, size_t bufSize)
+static size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, size_t bufSize)
 {
     switch(args->bits)
     {
@@ -96,4 +97,39 @@ size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *outBuf, 
         default:
             return 0;
     }
+}
+
+bool doHashes(struct AppArgs *appArgs, FILE *outF)
+{
+    uint8_t hash[16];
+
+    size_t valueLen;
+    if(appArgs->len)
+    {
+        valueLen = appArgs->len;
+    }
+    else
+    {
+        valueLen = strlen(appArgs->value);
+        if(appArgs->hashNul) valueLen++;
+    }
+
+    size_t hashSize = getHash(
+        appArgs,
+        (uint8_t*)appArgs->value,
+        valueLen,
+        hash,
+        sizeof hash
+    );
+
+    if(!hashSize)
+    {
+        if(inVal) free(inVal);
+
+        fprintf(stderr, "Hashing failed. (got hashSize was zero)\n");
+        return 1;
+    }
+
+    printOut(hash, outF, &appArgs);
+
 }
