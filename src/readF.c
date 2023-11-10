@@ -27,8 +27,8 @@ char *mallocReadStdin(FILE *f)
 
 char *mallocReadLineFile(FILE *f)
 {
-    char *line;
-    size_t z;
+    char *line = NULL;
+    size_t z = 0;
     ssize_t count = getline(&line, &z, f);
     if(count == -1)
     {
