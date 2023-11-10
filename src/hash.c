@@ -99,7 +99,7 @@ static size_t getHash(struct AppArgs *args, uint8_t *in, size_t size, uint8_t *o
     }
 }
 
-bool doHashes(struct AppArgs *appArgs, FILE *outF)
+bool doHash(struct AppArgs *appArgs, FILE *outF)
 {
     uint8_t hash[16];
 

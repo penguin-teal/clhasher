@@ -9,32 +9,11 @@
 
 int main(int argc, char **argv)
 {
+    int ret;
     char *inVal = NULL;
-    bool success;
     struct AppArgs appArgs;
 
     if(!doArgp(&appArgs, argc, argv)) return 2;
-
-    success = getInput(&appArgs, &inVal);
-    if(!success) return 2;
-
-    if(appArgs.escape)
-    {
-        char *esc = mallocEscStr(appArgs.value);
-        if(!esc) return 2;
-
-        if(inVal) free(inVal);
-        inVal = esc;
-        appArgs.value = esc;
-    }
-
-    if(!appArgs.algorithm)
-    {
-        if(inVal) free(inVal);
-
-        fprintf(stderr, "No algorithm given. Run with --help to see algorithm flags.\n");
-        return 2;
-    }
 
     FILE *outF;
     if(!strncmp(appArgs.out, "-", 2))
@@ -50,18 +29,61 @@ int main(int argc, char **argv)
 
     if(!outF)
     {
-        if(inVal) free(inVal);
-
         fprintf(stderr, "Couldn't open file '%s' for writing.\n", appArgs.out);
         return 2;
     }
 
-    success = doHashes(&appArgs, outF);
+    bool gotInput;
+    do
+    {
+        gotInput = getInput(&appArgs, &inVal);
+        if(!gotInput)
+        {
+            if(appArgs.multi) break;
+            else
+            {
+                ret = 2;
+                goto CloseFile;
+            }
+        }
 
-    if(inVal) free(inVal);
+        if(appArgs.escape)
+        {
+            char *esc = mallocEscStr(appArgs.value);
+            if(!esc)
+            {
+                ret = 2;
+                goto CloseFile;
+            }
+
+            if(inVal) free(inVal);
+            inVal = esc;
+            appArgs.value = esc;
+        }
+
+        if(!appArgs.algorithm)
+        {
+            if(inVal) free(inVal);
+
+            fprintf(stderr, "No algorithm given. Run with --help to see algorithm flags.\n");
+            ret = 2;
+            goto CloseFile;
+        }
+
+        bool hashSuccess = doHash(&appArgs, outF);
+        if(!hashSuccess)
+        {
+            ret = 2;
+            goto CloseFile;
+        }
+    }
+    while(appArgs.multi);
+
+    ret = 0;
+
+CloseFile:
     fclose(outF);
+    if(inVal) free(inVal);
 
-    if(!success) return 2;
-
-    return 0;
+    return ret;
 }
