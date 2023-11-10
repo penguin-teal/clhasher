@@ -163,16 +163,17 @@ int main(int argc, char **argv)
         }
     ExitLoop:
 
-        fprintf(outF, "%lu Collisions\n", collisionCount);
+        fprintf(outF, "\n%lu Collisions\n", collisionCount);
         if(collisionCount > 0) printf("\n");
 
         for(uint64_t i = 0; i < collisionCount; i++)
         {
-            uint64_t hashInxA = collisionIndices[collisionCount * 2];
-            uint64_t hashInxB = collisionIndices[collisionCount * 2 + 1];
+            uint64_t hashInxA = collisionIndices[i * 2];
+            uint64_t hashInxB = collisionIndices[i * 2 + 1];
             // TODO: Print out what those inputs actually are
-            fprintf(outF, "Hashes #%lu and %lu both get this hash:\n", hashInxA, hashInxB);
-            printOut(hashList + hashInxA, outF, &appArgs, hashInxA);
+            fprintf(outF, "Hashes #%lu and #%lu both get this hash:\n", hashInxA + 1, hashInxB + 1);
+            printOut(hashList + hashInxA * hashSize, outF, &appArgs, hashInxA);
+            fprintf(outF, "\n");
         }
 
         free(collisionIndices);
