@@ -58,6 +58,14 @@ int main(int argc, char **argv)
     bool gotInput;
     do
     {
+        // Do some clean up if we are doing --multi
+        if(appArgs.multi)
+        {
+            appArgs.value = NULL;
+            if(inVal) free(inVal);
+            inVal = NULL;
+        }
+
         gotInput = getInput(&appArgs, &inVal);
         if(!gotInput)
         {
