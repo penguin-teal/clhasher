@@ -14,7 +14,7 @@ bool getInput(struct AppArgs *appArgs, char **inVal)
                 *inVal = mallocReadLineFile(stdin);
                 if(!inVal) return false;
             }
-            if(!strncmp(appArgs->in, "-", 2) && !appArgs->len)
+            else if(!strncmp(appArgs->in, "-", 2) && !appArgs->len)
             {
                 *inVal = mallocReadStdin(stdin);
                 if(!inVal) return false;
