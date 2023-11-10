@@ -58,7 +58,7 @@ static struct argp_option options[] =
     { "hash-nul",       OPT_HASH_NUL        , 0     ,     0, "When using auto length, includes the terminating NUL (\\0) in the hash.", 1 },
     { "annotate",       OPT_ANNOTATE        , 0     ,     0, "Annotate output with radix prefixes and index/size info.", 1 },
     { "escape",         OPT_ESCAPE          , 0     ,     0, "Character escape sequences.", 1 },
-    { "multi",          OPT_MULTI           , 0     ,     0, "Split into multiple strings to hash by line feed ('\n', ASCII 0xA)." }
+    { "multi",          OPT_MULTI           , 0     ,     0, "Split into multiple strings to hash by line feed ('\n', ASCII 0xA).", 1 },
 
     { 0         ,       0                   , 0     ,     0, "Print Number Format:", 2 },
     { "hex"     ,       OPT_HEX             , 0     ,     0, "Prints as (a) hexadecimal base-16 number(s).", 2 },
