@@ -9,6 +9,11 @@ bool getInput(struct AppArgs *appArgs, char **inVal)
     {
         if(appArgs->in)
         {
+            if(appArgs->multi)
+            {
+                *inVal = mallocReadLineFile(stdin);
+                if(!inVal) return false;
+            }
             if(!strncmp(appArgs->in, "-", 2) && !appArgs->len)
             {
                 *inVal = mallocReadStdin(stdin);
@@ -40,6 +45,11 @@ bool getInput(struct AppArgs *appArgs, char **inVal)
             fprintf(stderr, "No value given to hash. Run with --usage to see usage.\n");
             return false;
         }
+    }
+    else if(appArgs->multi)
+    {
+        fprintf(stderr, "Must read data from a file or STDIN in --multi mode.\n");
+        return false;
     }
 
     return true;

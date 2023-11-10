@@ -25,6 +25,19 @@ char *mallocReadStdin(FILE *f)
     return s;
 }
 
+char *mallocReadLineFile(FILE *f)
+{
+    char *line;
+    size_t z;
+    ssize_t count = getline(&line, &z, f);
+    if(count == -1)
+    {
+        free(line);
+        return NULL;
+    }
+    else return line;
+}
+
 static size_t getFileSize(FILE *f)
 {
 #ifdef POSIX

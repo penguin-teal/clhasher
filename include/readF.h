@@ -5,6 +5,8 @@
 
 char *mallocReadStdin(FILE *f);
 
+char *mallocReadLineFile(FILE *f);
+
 char *mallocFileBuffer(FILE *f, size_t size);
 
 #endif
