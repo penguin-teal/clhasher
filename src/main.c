@@ -10,10 +10,13 @@
 int main(int argc, char **argv)
 {
     char *inVal = NULL;
+    int code;
+    bool success;
     struct AppArgs appArgs;
+
     if(!doArgp(&appArgs, argc, argv)) return 2;
 
-    int code = getInput(&appArgs, &inVal);
+    code = getInput(&appArgs, &inVal);
     if(code) return code;
 
     if(appArgs.escape)
@@ -54,9 +57,12 @@ int main(int argc, char **argv)
         return 2;
     }
 
-    doHashes(&appArgs, outF);
+    success = doHashes(&appArgs, outF);
 
+    if(inVal) free(inVal);
     fclose(outF);
+
+    if(!success) return 2;
 
     return 0;
 }

@@ -124,12 +124,11 @@ bool doHashes(struct AppArgs *appArgs, FILE *outF)
 
     if(!hashSize)
     {
-        if(inVal) free(inVal);
-
         fprintf(stderr, "Hashing failed. (got hashSize was zero)\n");
-        return 1;
+        return false;
     }
 
-    printOut(hash, outF, &appArgs);
+    printOut(hash, outF, appArgs);
 
+    return true;
 }
