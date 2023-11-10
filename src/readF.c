@@ -37,8 +37,8 @@ char *mallocReadLineFile(FILE *f)
     }
     else
     {
-        // Replace trailing '\n' with a NUL
-        line[count - 1] = '\0';
+        // Replace trailing '\n' with a NUL so we don't hash it
+        if(count > 0 && line[count - 1] == '\n') line[count - 1] = '\0';
         return line;
     }
 }
