@@ -12,12 +12,20 @@ bool getInput(struct AppArgs *appArgs, char **inVal)
             if(appArgs->multi)
             {
                 *inVal = mallocReadLineFile(stdin);
-                if(!inVal) return false;
+                if(!*inVal)
+                {
+                    appArgs->value = NULL;
+                    return false;
+                }
             }
             else if(!strncmp(appArgs->in, "-", 2) && !appArgs->len)
             {
                 *inVal = mallocReadStdin(stdin);
-                if(!inVal) return false;
+                if(!*inVal)
+                {
+                    appArgs->value = NULL;
+                    return false;
+                }
             }
             else
             {
@@ -28,6 +36,7 @@ bool getInput(struct AppArgs *appArgs, char **inVal)
                 if(!fIn)
                 {
                     fprintf(stderr, "Couldn't open input file '%s'.\n", appArgs->in);
+                    appArgs->value = NULL;
                     return false;
                 }
 
@@ -35,7 +44,11 @@ bool getInput(struct AppArgs *appArgs, char **inVal)
 
                 fclose(fIn);
 
-                if(!inVal) return false;
+                if(!*inVal)
+                {
+                    appArgs->value = NULL;
+                    return false;
+                }
             }
 
             appArgs->value = *inVal;
