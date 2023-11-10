@@ -10,14 +10,13 @@
 int main(int argc, char **argv)
 {
     char *inVal = NULL;
-    int code;
     bool success;
     struct AppArgs appArgs;
 
     if(!doArgp(&appArgs, argc, argv)) return 2;
 
-    code = getInput(&appArgs, &inVal);
-    if(code) return code;
+    success = getInput(&appArgs, &inVal);
+    if(!success) return 2;
 
     if(appArgs.escape)
     {

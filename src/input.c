@@ -3,7 +3,7 @@
 #include "appArgs.h"
 #include "readF.h"
 
-int getInput(struct AppArgs *appArgs, char **inVal)
+bool getInput(struct AppArgs *appArgs, char **inVal)
 {
     if(!(appArgs->value))
     {
@@ -12,7 +12,7 @@ int getInput(struct AppArgs *appArgs, char **inVal)
             if(!strncmp(appArgs->in, "-", 2) && !appArgs->len)
             {
                 *inVal = mallocReadStdin(stdin);
-                if(!inVal) return 2;
+                if(!inVal) return false;
             }
             else
             {
@@ -23,14 +23,14 @@ int getInput(struct AppArgs *appArgs, char **inVal)
                 if(!fIn)
                 {
                     fprintf(stderr, "Couldn't open input file '%s'.\n", appArgs->in);
-                    return 2;
+                    return false;
                 }
 
                 *inVal = mallocFileBuffer(fIn, appArgs->len);
 
                 fclose(fIn);
 
-                if(!inVal) return 2;
+                if(!inVal) return false;
             }
 
             appArgs->value = *inVal;
@@ -38,10 +38,10 @@ int getInput(struct AppArgs *appArgs, char **inVal)
         else
         {
             fprintf(stderr, "No value given to hash. Run with --usage to see usage.\n");
-            return 2;
+            return false;
         }
     }
 
-    return 0;
+    return true;
 }
 
