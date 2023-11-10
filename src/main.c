@@ -138,9 +138,8 @@ int main(int argc, char **argv)
         for(uint64_t i = 0; i < hashListCount; i += hashSize)
         {
             uint8_t *hashA = hashList + i;
-            for(uint64_t j = 0; j < hashListCount; j += hashSize)
+            for(uint64_t j = i + hashSize; j < hashListCount; j += hashSize)
             {
-                if(i == j) continue;
                 uint8_t *hashB = hashList + j;
                 if(!memcmp(hashA, hashB, hashSize))
                 {
