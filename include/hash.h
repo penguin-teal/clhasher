@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include "appArgs.h"
 
-bool doHash(struct AppArgs *appArgs, FILE *outF);
+bool doHash(struct AppArgs *appArgs, FILE *outF, uint64_t hashNumber);
 
 #endif

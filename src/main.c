@@ -33,6 +33,7 @@ int main(int argc, char **argv)
         return 2;
     }
 
+    uint64_t hashCount = 0;
     bool gotInput;
     do
     {
@@ -46,6 +47,7 @@ int main(int argc, char **argv)
                 goto CloseFile;
             }
         }
+        else hashCount++;
 
         if(appArgs.escape)
         {
@@ -70,7 +72,7 @@ int main(int argc, char **argv)
             goto CloseFile;
         }
 
-        bool hashSuccess = doHash(&appArgs, outF);
+        bool hashSuccess = doHash(&appArgs, outF, hashCount);
         if(!hashSuccess)
         {
             ret = 2;

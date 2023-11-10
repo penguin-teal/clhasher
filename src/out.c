@@ -3,7 +3,7 @@
 #include <string.h>
 #include "appArgs.h"
 
-void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
+void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs, uint64_t hashNumber)
 {
     char fmt[6];
     fmt[0] = '%';
@@ -32,6 +32,8 @@ void printOut(uint8_t *buf, FILE *f, struct AppArgs *appArgs)
             printf("Radix %u unsupported.\n", appArgs->radix);
             return;
     }
+
+    if(appArgs->multi && appArgs->annotate) printf("#%02lu  ", hashNumber);
 
     switch(appArgs->splitBits)
     {
