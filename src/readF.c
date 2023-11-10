@@ -35,7 +35,12 @@ char *mallocReadLineFile(FILE *f)
         free(line);
         return NULL;
     }
-    else return line;
+    else
+    {
+        // Replace trailing '\n' with a NUL
+        line[count - 1] = '\0';
+        return line;
+    }
 }
 
 static size_t getFileSize(FILE *f)
