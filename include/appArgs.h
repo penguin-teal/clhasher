@@ -20,8 +20,10 @@ struct AppArgs
     bool hashNul;
     bool annotate;
     bool escape;
+    bool multi;
 };
 
 bool doArgp(struct AppArgs *appArgs, int argc, char **argv);
 
 #endif
+
