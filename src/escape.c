@@ -109,7 +109,7 @@ char *mallocEscStr(const char *in)
                 atOut += advance;
                 break;
             default:
-                fprintf(stderr, "Unrecorgnized escape sequence '\\%c'.\n", *lastIn);
+                fprintf(stderr, "Unrecognized escape sequence '\\%c'.\n", *lastIn);
                 goto Fail;
         }
     }
