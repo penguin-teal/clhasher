@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 
         hashListCount += hashSize;
 
-        stringListPush(allInputs, appArgs.value, appArgs.len);
+        if(allInputs) stringListPush(allInputs, appArgs.value, appArgs.len);
     }
     while(appArgs.multi);
 
