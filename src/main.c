@@ -6,12 +6,15 @@
 #include "hash.h"
 #include "escape.h"
 #include "input.h"
+#include "list.h"
+#include "collisions.h"
 
 int main(int argc, char **argv)
 {
     int ret = 0;
     uint8_t *hashList = NULL;
     char *inVal = NULL;
+    string_list_T *allInputs = NULL;
     struct AppArgs appArgs;
 
     if(!doArgp(&appArgs, argc, argv)) return 2;
@@ -49,6 +52,8 @@ int main(int argc, char **argv)
             ret = 1;
             goto CloseFile;
         }
+
+        allInputs = createStringList(32);
     }
     else
     {
@@ -101,6 +106,12 @@ int main(int argc, char **argv)
             goto CloseFile;
         }
 
+        if(!appArgs.len)
+        {
+            appArgs.len = strlen(appArgs.value);
+            if(appArgs.hashNul) appArgs.len++;
+        }
+
         // Make sure hashList is big enough
         if(hashList && hashListSize - hashListCount < hashSize)
         {
@@ -125,59 +136,12 @@ int main(int argc, char **argv)
         }
 
         hashListCount += hashSize;
+
+        stringListPush(allInputs, appArgs.value, appArgs.len);
     }
     while(appArgs.multi);
 
-    if(appArgs.multi)
-    {
-        uint64_t collisionCount = 0;
-        // 2 U64 indices for each hash
-        size_t collisionIndicesSize = hashListCount / hashSize * sizeof(uint64_t) * 2;
-        uint64_t *collisionIndices = malloc(collisionIndicesSize);
-
-        for(uint64_t i = 0; i < hashListCount; i += hashSize)
-        {
-            uint8_t *hashA = hashList + i;
-            for(uint64_t j = i + hashSize; j < hashListCount; j += hashSize)
-            {
-                uint8_t *hashB = hashList + j;
-                if(!memcmp(hashA, hashB, hashSize))
-                {
-                    if(collisionCount * sizeof(uint64_t) * 2 >= collisionIndicesSize)
-                    {
-                        collisionIndicesSize *= 2;
-                        uint64_t *newArr = realloc(collisionIndices, collisionIndicesSize);
-                        if(!newArr)
-                        {
-                            fprintf(stderr, "Failed to realloc collision list.\n");
-                            ret = 1;
-                            goto ExitLoop;
-                        }
-                        collisionIndices = newArr;
-                    }
-                    collisionIndices[collisionCount * 2] = i / hashSize;
-                    collisionIndices[collisionCount * 2 + 1] = j / hashSize;
-                    collisionCount++;
-                }
-            }
-        }
-    ExitLoop:
-
-        fprintf(outF, "\n%lu Collisions\n", collisionCount);
-        if(collisionCount > 0) printf("\n");
-
-        for(uint64_t i = 0; i < collisionCount; i++)
-        {
-            uint64_t hashInxA = collisionIndices[i * 2];
-            uint64_t hashInxB = collisionIndices[i * 2 + 1];
-            // TODO: Print out what those inputs actually are
-            fprintf(outF, "Hashes #%lu and #%lu both get this hash:\n", hashInxA + 1, hashInxB + 1);
-            printOut(hashList + hashInxA * hashSize, outF, &appArgs, hashInxA);
-            fprintf(outF, "\n");
-        }
-
-        free(collisionIndices);
-    }
+    reportCollisions(&appArgs, hashListCount, hashSize, hashList, outF, allInputs);
 
 CloseFile:
     fclose(outF);

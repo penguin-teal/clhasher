@@ -103,21 +103,10 @@ bool doHash(struct AppArgs *appArgs, FILE *outF, uint8_t *hashOut, uint64_t hash
 {
     uint8_t hash[16];
 
-    size_t valueLen;
-    if(appArgs->len)
-    {
-        valueLen = appArgs->len;
-    }
-    else
-    {
-        valueLen = strlen(appArgs->value);
-        if(appArgs->hashNul) valueLen++;
-    }
-
     size_t hashSize = getHash(
         appArgs,
         (uint8_t*)appArgs->value,
-        valueLen,
+        appArgs->len,
         hash,
         sizeof hash
     );
