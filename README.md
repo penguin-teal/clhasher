@@ -49,8 +49,8 @@ sudo make install
 cd clhasher
 # Get the changes
 git pull
-# Switch to latest (v1.0.0 is latest)
-git switch --detach v1.0.0
+# Switch to latest (v1.1.0 is latest)
+git switch --detach v1.1.0
 # Clean just to be safe then build release again
 make clean release
 # Install like you did before (ROOT is required)
