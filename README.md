@@ -24,8 +24,8 @@ clhasher <options> <algorithm flag> <input>
 git clone https://github.com/penguin-teal/clhasher.git clhasher
 # Enter that directory
 cd clhasher
-# Go to specific release (v1.0.0 is latest)
-git switch --detach v1.0.0
+# Go to specific release (v1.1.0 is latest)
+git switch --detach v1.1.0
 ```
 
 2. Build the project.
@@ -127,6 +127,24 @@ clhasher -x0 --fnv1a-64 'TESTSTR'
 # Use escape codes:
 clhasher -xe --fnv1a-64 'line1\n\tline2'
 # B2063D2905CD97E1
+
+# Use multiline hashing:
+clhasher -axm --fnv1a-64
+# > Hello
+# #01  u64 [0]:	0x63F0BFACF2C00F6B
+# > Sir
+# #02  u64 [0]:	0xF76EA5B545A72761
+# > Hashed
+# #03  u64 [0]:	0x6CEC30CFBB0E4C7C
+# > Sir
+# #04  u64 [0]:	0xF76EA5B545A72761
+# > Lol
+# #05  u64 [0]:	0x68344BC6E6C587E0
+#
+# 1 Collisions
+#
+# Hashes #2 (Sir) and #4 (Sir) both get this hash:
+# #01  u64 [0]:	0xF76EA5B545A72761
 ```
 
 ## Algorithms
@@ -158,6 +176,7 @@ Miscellaneous:
 - `-z <BYTES>`/`--length=<BYTES>` Number of bytes of input to hash. Defaults to `0` for automatic.
 - `-0`/`--hash-nul` When length is automatic, includes the `\0` `NUL` to hash (by default does not hash the `NUL`).
 - `-e`/`--escape` Allow escape sequences in the inputted string (see [Escaping](#escaping)).
+- `-m`/`--multi` Individually hash each line of input (splits input by a line feed). Also automatically reports any collisions.
 - `-v`/`--verbose` Describe what is happening.
 - `-?`/`--help` Print help list.
 - `--usage` See usage message.
