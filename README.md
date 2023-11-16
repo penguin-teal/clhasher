@@ -140,7 +140,7 @@ clhasher -axm --fnv1a-64
 # #04  u64 [0]:	0xF76EA5B545A72761
 # > Lol
 # #05  u64 [0]:	0x68344BC6E6C587E0
-#
+# > Ctrl + D
 # 1 Collisions
 #
 # Hashes #2 (Sir) and #4 (Sir) both get this hash:
